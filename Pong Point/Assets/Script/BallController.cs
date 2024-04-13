@@ -26,8 +26,10 @@ public class BallController : MonoBehaviour
             newVelocity.y = -newVelocity.y;
             rb.velocity = newVelocity;  
         }
+
+       
     }
 
-    If (Collision.gameObject.CompareTag("Player") 
+   
 
 }

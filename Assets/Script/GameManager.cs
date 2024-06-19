@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -15,6 +16,9 @@ public class GameManager : MonoBehaviour
    
     public TextMeshProUGUI textPointsPlayer;
     public TextMeshProUGUI textPointsEnemy;
+    public GameObject screenEndGame;
+
+    public TextMeshProUGUI textEndGame;
 
     void Start()
      {
@@ -25,8 +29,8 @@ public class GameManager : MonoBehaviour
     public void ResetGame()
     {
         //Define as posições iniciais das raquetes 
-        playerPaddle.position = new Vector3(7f,0f,0f);
-        enemyPaddle.position = new Vector3(-7f, 0f, 0f);
+        playerPaddle.position = new Vector3(30f,0f,0f);
+        enemyPaddle.position = new Vector3(-30f, 0f, 0f);
         
         ballController.ResetBall();
 
@@ -36,7 +40,7 @@ public class GameManager : MonoBehaviour
         textPointsEnemy.text = enemyScore.ToString();
         textPointsPlayer.text = playerScore.ToString();
     
-    
+        screenEndGame.SetActive(false);
     }
 
    public void ScorePlayer()
@@ -54,16 +58,31 @@ public class GameManager : MonoBehaviour
     }
     public void CheckWin()
     {
-        if (enemyScore >= winPoints)  
+        if (enemyScore >= winPoints || playerScore >= winPoints)
         {
-            ResetGame(); 
+            //ResetGame();
+            EndGame();
         }
-            else if (playerScore >= winPoints)
-            {
-                ResetGame();
-            }
+    }
+    public void EndGame()
+    {
+        //screenEndGame.SetActive(true);
+        //dentro do método EndGame
+        //textEndGame.text = "Vitória " + SaveController.Instance.GetName(playerScore > enemyScore);
+        //Invoke("LoadMenu", 2f);
+
+        screenEndGame.SetActive(true);
+        string winner = SaveController.Instance.GetName(playerScore > enemyScore);
+        textEndGame.text = "Vitória " + winner;
+        SaveController.Instance.SaveWinner(winner);
+        
+        Invoke("LoadMenu", 2f);
 
     }
-  
+    private void LoadMenu()
+    {
+        SceneManager.LoadScene("Menu");
+    }
+
 
 }

@@ -6,7 +6,7 @@ public class EnemyPadddleController : MonoBehaviour
 {
     private Rigidbody2D rb;
     public float speed = 3f;
-    public Vector2 limits = new Vector2(-4.5f, 4.5f);
+    public Vector2 limits = new Vector2(-15f, 15f);
 
     private GameObject ball;
 
